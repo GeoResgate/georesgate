@@ -16,6 +16,7 @@ export default function CadastroPage() {
     cep: "",
     familia: "",
   })
+
   const [errors, setErrors] = useState<{ [key: string]: boolean }>({})
   const [success, setSuccess] = useState(false)
 
@@ -36,11 +37,7 @@ export default function CadastroPage() {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (validate()) {
-      setSuccess(true)
-      setTimeout(() => {
-        // 👉 Trocar aqui pelo nome da próxima rota (ex: "/sistema")
-        router.push("/proxima-tela")
-      }, 5000)
+      router.push("/Processando")
     }
   }
 
@@ -79,7 +76,7 @@ export default function CadastroPage() {
   const inputClass = (field: string) =>
     `w-full h-14 px-6 text-white placeholder-white bg-no-repeat bg-contain bg-left rounded-lg focus:outline-none ${
       errors[field] ? "ring-2 ring-red-500" : ""
-    } bg-[url('/btn-fundo.png')] autofill:bg-[#450e0e] ${success ? 'pointer-events-none opacity-70' : ''}`
+    } bg-[url('/btn-fundo.png')] autofill:bg-[#450e0e'] ${success ? 'pointer-events-none opacity-70' : ''}`
 
   return (
     <div className="relative min-h-screen w-full bg-red-700 flex items-center justify-center">
@@ -91,20 +88,12 @@ export default function CadastroPage() {
       />
 
       <div className="w-full max-w-[800px] rounded-2xl bg-[#450e0e]/80 p-8 sm:p-12 text-white shadow-lg mx-4">
-        {success && (
-          <div className="flex justify-center mb-6 animate-fade-in">
-            <Image src="/logo-cadastro.png" alt="Logo" width={200} height={60} />
-          </div>
-        )}
-
-        {!success && (
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold animate-fade-in">Cadastre-se</h1>
-            <p className="text-sm text-white/80 animate-fade-in delay-100">
-              Ajude o resgate a te encontrar com precisão. Em momentos de emergência, cada segundo conta.
-            </p>
-          </div>
-        )}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold animate-fade-in">Cadastre-se</h1>
+          <p className="text-sm text-white/80 animate-fade-in delay-100">
+            Ajude o resgate a te encontrar com precisão. Em momentos de emergência, cada segundo conta.
+          </p>
+        </div>
 
         <form className="space-y-8" onSubmit={handleSubmit}>
           <div>
@@ -128,20 +117,10 @@ export default function CadastroPage() {
           </div>
 
           <div className="flex justify-center">
-            {!success ? (
-              <button
-                type="submit"
-                className="w-[200px] h-[50px] bg-[url('/botao-cadastrar.png')] bg-cover bg-no-repeat bg-center transition transform active:scale-95 hover:scale-105 duration-300 ease-in-out"
-              />
-            ) : (
-              <Image
-                src="/btn-sucesso.png"
-                alt="Sucesso"
-                width={250}
-                height={60}
-                className="transition ease-in-out duration-700 animate-fade-in"
-              />
-            )}
+            <button
+              type="submit"
+              className="w-[200px] h-[50px] bg-[url('/botao-cadastrar.png')] bg-cover bg-no-repeat bg-center transition transform active:scale-95 hover:scale-105 duration-300 ease-in-out"
+            />
           </div>
         </form>
       </div>
