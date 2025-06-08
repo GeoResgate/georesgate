@@ -1,19 +1,37 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import IntroAnimation from "./components/IntroAnimation";
+import { useEffect, useState } from 'react'
+import IntroLoader from './components/IntroLoader'
+import TermoUso from './components/TermoUso'
+import TermoUsoMobile from './components/TermoUsoMobile'
 
 export default function Home() {
-  const router = useRouter();
+  const [showTermo, setShowTermo] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/Cadastro");
-    }, 9000); 
+      setShowTermo(true)
+    }, 9000)
 
-    return () => clearTimeout(timer);
-  }, [router]);
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 640)
+    }
 
-  return <IntroAnimation />;
+    checkIsMobile()
+    window.addEventListener('resize', checkIsMobile)
+
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('resize', checkIsMobile)
+    }
+  }, [])
+
+  // Fase 1 — Animação de carregamento
+  if (!showTermo) {
+    return <IntroLoader />
+  }
+
+  // Fase 2 — Termo de uso (mobile ou desktop)
+  return isMobile ? <TermoUsoMobile /> : <TermoUso />
 }

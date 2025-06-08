@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import IntroAnimation from "../components/IntroAnimation"; // ajuste o caminho se necessário
 import { useRouter } from "next/navigation";
 
 export default function CadastroPage() {
   const router = useRouter();
-  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
     nascimento: "",
@@ -21,13 +19,6 @@ export default function CadastroPage() {
 
   const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
   const [success, setSuccess] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowForm(true);
-    }, 9000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const validate = () => {
     const e: any = {};
@@ -84,8 +75,6 @@ export default function CadastroPage() {
     `w-full h-14 px-6 text-white placeholder-white bg-no-repeat bg-contain bg-left rounded-lg focus:outline-none ${
       errors[field] ? "ring-2 ring-red-500" : ""
     } bg-[url('/btn-fundo.png')] autofill:bg-[#450e0e'] ${success ? 'pointer-events-none opacity-70' : ''}`;
-
-  if (!showForm) return <IntroAnimation />;
 
   return (
     <div className="relative min-h-screen w-full bg-red-700 flex items-center justify-center">
