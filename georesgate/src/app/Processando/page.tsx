@@ -1,23 +1,35 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Processando() {
   const router = useRouter();
+  const [hide, setHide] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/Confirmado"); // 👉 Altere para a rota final
+    // Fade-out antes de sair
+    const fadeOutTimer = setTimeout(() => {
+      setHide(true);
+    }, 4800); // ativa 200ms antes da troca
+
+    // Redireciona para a tela de confirmação
+    const redirectTimer = setTimeout(() => {
+      router.push("/Confirmado");
     }, 5000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(fadeOutTimer);
+      clearTimeout(redirectTimer);
+    };
   }, [router]);
 
   return (
     <div
-      className="relative min-h-screen w-full bg-no-repeat bg-cover bg-center font-poppins"
+      className={`relative min-h-screen w-full bg-no-repeat bg-cover bg-center font-poppins transition-opacity duration-500 ${
+        hide ? "opacity-0" : "opacity-100"
+      }`}
       style={{ backgroundImage: "url('/background-processando.png')" }}
     >
       {/* Texto centralizado verticalmente */}

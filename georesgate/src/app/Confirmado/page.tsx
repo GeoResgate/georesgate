@@ -9,10 +9,12 @@ export default function Page() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
+    // Animação de entrada
     const timeout1 = setTimeout(() => {
       setShow(true);
     }, 200);
 
+    // Redirecionamento para a Tela Principal após 5 segundos
     const timeout2 = setTimeout(() => {
       router.push("/components/TelaPrincipal");
     }, 5000);
@@ -28,7 +30,7 @@ export default function Page() {
       className="relative min-h-screen w-full bg-no-repeat bg-cover bg-center font-poppins"
       style={{ backgroundImage: "url('/background-carregamento.png')" }}
     >
-      {/* Texto animado com posição ajustada */}
+      {/* Texto animado com fade + subida */}
       <div
         className={`absolute top-[40%] left-1/2 -translate-x-1/2 text-center transition-all duration-1000 ease-in-out ${
           show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -39,7 +41,7 @@ export default function Page() {
         </h1>
       </div>
 
-      {/* Logo posicionada embaixo */}
+      {/* Logo embaixo fixada */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <Image
           src="/logo-cadastro.png"
