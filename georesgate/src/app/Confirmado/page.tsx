@@ -16,7 +16,7 @@ export default function Page() {
 
     // Redirecionamento para a Tela Principal após 5 segundos
     const timeout2 = setTimeout(() => {
-      router.push("/components/TelaPrincipal");
+      router.push("/TelaPrincipal");
     }, 5000);
 
     return () => {
