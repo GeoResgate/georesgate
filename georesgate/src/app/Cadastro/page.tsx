@@ -1,11 +1,13 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import IntroAnimation from "../components/IntroAnimation"; // ajuste o caminho se necessário
+import { useRouter } from "next/navigation";
 
 export default function CadastroPage() {
-  const router = useRouter()
+  const router = useRouter();
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
     nascimento: "",
@@ -15,68 +17,75 @@ export default function CadastroPage() {
     numero: "",
     cep: "",
     familia: "",
-  })
+  });
 
-  const [errors, setErrors] = useState<{ [key: string]: boolean }>({})
-  const [success, setSuccess] = useState(false)
+  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowForm(true);
+    }, 9000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const validate = () => {
-    const e: any = {}
-    if (!formData.nome) e.nome = true
-    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.nascimento)) e.nascimento = true
-    if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(formData.cpf)) e.cpf = true
-    if (!/^\(\d{2}\) \d{5}-\d{4}$/.test(formData.telefone)) e.telefone = true
-    if (!formData.rua) e.rua = true
-    if (!/^\d+$/.test(formData.numero)) e.numero = true
-    if (!/^\d{5}-\d{3}$/.test(formData.cep)) e.cep = true
-    if (!formData.familia) e.familia = true
-    setErrors(e)
-    return Object.keys(e).length === 0
-  }
+    const e: any = {};
+    if (!formData.nome) e.nome = true;
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.nascimento)) e.nascimento = true;
+    if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(formData.cpf)) e.cpf = true;
+    if (!/^\(\d{2}\) \d{5}-\d{4}$/.test(formData.telefone)) e.telefone = true;
+    if (!formData.rua) e.rua = true;
+    if (!/^\d+$/.test(formData.numero)) e.numero = true;
+    if (!/^\d{5}-\d{3}$/.test(formData.cep)) e.cep = true;
+    if (!formData.familia) e.familia = true;
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
 
   const handleSubmit = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     if (validate()) {
-      router.push("/Processando")
+      router.push("/Processando");
     }
-  }
+  };
 
   const formatValue = (name: string, value: string) => {
-    const onlyNums = value.replace(/\D/g, "")
+    const onlyNums = value.replace(/\D/g, "");
     switch (name) {
       case "nascimento":
-        return onlyNums.slice(0, 8)
-          .replace(/(\d{2})(\d)/, "$1/$2")
-          .replace(/(\d{2})(\d)/, "$1/$2")
+        return onlyNums.slice(0, 8).replace(/(\d{2})(\d)/, "$1/$2").replace(/(\d{2})(\d)/, "$1/$2");
       case "cpf":
         return onlyNums.slice(0, 11)
           .replace(/(\d{3})(\d)/, "$1.$2")
           .replace(/(\d{3})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
       case "telefone":
         return onlyNums.slice(0, 11)
           .replace(/(\d{2})(\d)/, "($1) $2")
-          .replace(/(\d{5})(\d)/, "$1-$2")
+          .replace(/(\d{5})(\d)/, "$1-$2");
       case "cep":
-        return onlyNums.slice(0, 8).replace(/(\d{5})(\d)/, "$1-$2")
+        return onlyNums.slice(0, 8).replace(/(\d{5})(\d)/, "$1-$2");
       case "numero":
-        return onlyNums
+        return onlyNums;
       default:
-        return value
+        return value;
     }
-  }
+  };
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target
-    const formatted = formatValue(name, value)
-    setFormData({ ...formData, [name]: formatted })
-    setErrors({ ...errors, [name]: false })
-  }
+    const { name, value } = e.target;
+    const formatted = formatValue(name, value);
+    setFormData({ ...formData, [name]: formatted });
+    setErrors({ ...errors, [name]: false });
+  };
 
   const inputClass = (field: string) =>
     `w-full h-14 px-6 text-white placeholder-white bg-no-repeat bg-contain bg-left rounded-lg focus:outline-none ${
       errors[field] ? "ring-2 ring-red-500" : ""
-    } bg-[url('/btn-fundo.png')] autofill:bg-[#450e0e'] ${success ? 'pointer-events-none opacity-70' : ''}`
+    } bg-[url('/btn-fundo.png')] autofill:bg-[#450e0e'] ${success ? 'pointer-events-none opacity-70' : ''}`;
+
+  if (!showForm) return <IntroAnimation />;
 
   return (
     <div className="relative min-h-screen w-full bg-red-700 flex items-center justify-center">
@@ -125,5 +134,5 @@ export default function CadastroPage() {
         </form>
       </div>
     </div>
-  )
+  );
 }

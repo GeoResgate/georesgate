@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import IntroAnimation from "./components/IntroAnimation";
-import CadastroPage from "./components/CadastroPage";
 
 export default function Home() {
-  const [showCadastro, setShowCadastro] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowCadastro(true);
-    }, 9000); // espera 9 segundos antes de mostrar o cadastro
+      router.push("/Cadastro");
+    }, 9000); 
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [router]);
 
-  return showCadastro ? <CadastroPage /> : <IntroAnimation />;
+  return <IntroAnimation />;
 }
