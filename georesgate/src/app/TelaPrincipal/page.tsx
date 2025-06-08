@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [pedidoEnviado, setPedidoEnviado] = useState(false);
+  const router = useRouter();
 
   const handleClick = () => {
     setPedidoEnviado(true);
@@ -12,6 +14,10 @@ export default function Page() {
 
   const handleCancelar = () => {
     setPedidoEnviado(false);
+  };
+
+  const handleAcessarConta = () => {
+    router.push("/Cadastrado"); // ✅ redireciona pra tela de conta cadastrada
   };
 
   return (
@@ -33,6 +39,7 @@ export default function Page() {
           width={40}
           height={40}
           className="cursor-pointer"
+          onClick={handleAcessarConta}
         />
       </div>
 
