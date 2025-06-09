@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function CadastroPage() {
   const router = useRouter();
+
   const [formData, setFormData] = useState({
     nome: "",
     nascimento: "",
@@ -17,11 +18,10 @@ export default function CadastroPage() {
     familia: "",
   });
 
-  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
-  const [success, setSuccess] = useState(false);
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
 
   const validate = () => {
-    const e: any = {};
+    const e: Record<string, boolean> = {};
     if (!formData.nome) e.nome = true;
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.nascimento)) e.nascimento = true;
     if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(formData.cpf)) e.cpf = true;
@@ -34,7 +34,7 @@ export default function CadastroPage() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
       router.push("/Processando");
@@ -64,7 +64,7 @@ export default function CadastroPage() {
     }
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const formatted = formatValue(name, value);
     setFormData({ ...formData, [name]: formatted });
@@ -74,7 +74,7 @@ export default function CadastroPage() {
   const inputClass = (field: string) =>
     `w-full h-14 px-6 text-white placeholder-white bg-no-repeat bg-contain bg-left rounded-lg focus:outline-none ${
       errors[field] ? "ring-2 ring-red-500" : ""
-    } bg-[url('/btn-fundo.png')] autofill:bg-[#450e0e'] ${success ? 'pointer-events-none opacity-70' : ''}`;
+    } bg-[url('/btn-fundo.png')] autofill:bg-[#450e0e']`;
 
   return (
     <div className="relative min-h-screen w-full bg-red-700 flex items-center justify-center">
