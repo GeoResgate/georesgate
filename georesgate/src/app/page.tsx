@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import IntroLoader from './components/IntroLoader'
-import TermoUso from './components/TermoUso'
-import TermoUsoMobile from './components/TermoUsoMobile'
+import IntroLoader from './IntroLoader/IntroLoader'
+import TermoUso from './Termo/TermoUso'
+import TermoUsoMobile from './TermoMobile/TermoUsoMobile'
 
 export default function Home() {
   const [showTermo, setShowTermo] = useState(false)
