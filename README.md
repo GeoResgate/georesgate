@@ -42,3 +42,28 @@ components/ — Componentes reutilizáveis da interface
 public/ — Imagens e ícones
 
 styles/ — Estilo global (globals.css)
+
+🌐 API de Integração
+O front-end se comunica com o back-end Quarkus hospedado em:
+
+
+
+
+
+
+
+## Video
+[Pitch](https://youtu.be/R-Tul0ggzG4?si=hX0m2ARXFZV0Svq2)
+
+
+
+
+
+👤 Autoria
+Projeto acadêmico para a disciplina Domain Driven Design Using Java – FIAP
+
+🎓 Maria Eduarda Fernandes Rocha — RM: 560657
+
+🎓 Victor de Carvalho Alves — RM: 560395
+
+🎓 Guilherme Santos Falcão — RM: 560729
