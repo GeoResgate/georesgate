@@ -31,10 +31,11 @@ export default function TermoUsoMobile() {
       />
 
       {/* SVG Mobile */}
-      <img
+      <Image
         src={backgroundMobileSvg}
         alt="Fundo Mobile"
-        className="absolute inset-0 w-full h-full object-contain z-10"
+        fill
+        className="object-contain z-10"
       />
 
       <div className="relative z-20 w-full text-white text-center px-6 py-6 flex flex-col items-center justify-start">

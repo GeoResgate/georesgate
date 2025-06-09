@@ -4,10 +4,21 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+type FormData = {
+  nome: string;
+  cpf: string;
+  nascimento: string;
+  telefone: string;
+  rua: string;
+  cep: string;
+  numero: string;
+  familia: string;
+};
+
 export default function ContaCadastradaPage() {
   const router = useRouter();
   const [editando, setEditando] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     nome: "",
     cpf: "",
     nascimento: "",
@@ -18,13 +29,11 @@ export default function ContaCadastradaPage() {
     familia: "",
   });
 
-  const formatValue = (name: string, value: string) => {
+  const formatValue = (name: keyof FormData, value: string) => {
     const onlyNums = value.replace(/\D/g, "");
     switch (name) {
       case "nascimento":
-        return onlyNums.slice(0, 8)
-          .replace(/(\d{2})(\d)/, "$1/$2")
-          .replace(/(\d{2})(\d)/, "$1/$2");
+        return onlyNums.slice(0, 8).replace(/(\d{2})(\d)/, "$1/$2").replace(/(\d{2})(\d)/, "$1/$2");
       case "cpf":
         return onlyNums.slice(0, 11)
           .replace(/(\d{3})(\d)/, "$1.$2")
@@ -43,14 +52,14 @@ export default function ContaCadastradaPage() {
     }
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleBlur = (e: any) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const formatted = formatValue(name, value);
+    const formatted = formatValue(name as keyof FormData, value);
     setFormData((prev) => ({ ...prev, [name]: formatted }));
   };
 
@@ -73,13 +82,19 @@ export default function ContaCadastradaPage() {
     router.push("/");
   };
 
-  const Input = ({ name, placeholder }: { name: string; placeholder: string }) => (
+  const Input = ({
+    name,
+    placeholder,
+  }: {
+    name: keyof FormData;
+    placeholder: string;
+  }) => (
     <div className="relative w-full h-[50px] bg-[url('/fundo-cadastrado.png')] bg-no-repeat bg-cover rounded-md">
       <input
         type="text"
         name={name}
         placeholder={placeholder}
-        value={(formData as any)[name]}
+        value={formData[name]}
         onChange={handleChange}
         onBlur={handleBlur}
         readOnly={!editando}
