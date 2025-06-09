@@ -33,3 +33,12 @@ GeoResgate é um sistema de apoio emergencial desenvolvido em Java com Quarkus, 
 
 🔹 Emergência
 /emergencia — Envio de alerta de resgate com localização automática
+
+📁 Estrutura de Pastas
+app/ — Páginas da aplicação (rotas)
+
+components/ — Componentes reutilizáveis da interface
+
+public/ — Imagens e ícones
+
+styles/ — Estilo global (globals.css)
